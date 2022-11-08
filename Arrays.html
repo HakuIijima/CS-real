@@ -1,0 +1,56 @@
+<script>
+    // let arr = ["abc","def","foo","bar"];
+
+    // let nums = [1, Math.PI, 32, Math.E, 666];
+
+    // console.log(nums[0]);
+    // console.log(arr[0]);
+
+    // console.log(nums[0]+arr[0]);
+
+    // let scores = [50,60,80,90,100];
+
+    // for(let i=0; i<scores.length;i++){
+    //     console.log(scores[i]);
+    // }
+
+    // let sum = (nums) =>{
+    //     let total = 0;
+    //     for(let i=0; i<nums.length;i++){
+    //         total+=nums[i];
+    //     }
+    //     console.log(total);
+    //     return total;
+        
+    // }
+
+    // sum([1,2,3,4,5])
+
+    let largest = (nums) =>{
+        let temp = nums[0];
+        for(let i=0; i<nums.length;i++){
+            if(nums[i]>temp){
+                temp = nums[i];
+            }
+        }
+        console.log(temp);
+        return temp;
+    }
+
+    largest([1,12,123,3204,3,300]);
+
+    let average = (nums) =>{
+        let total = 0;
+        let count = 0;
+        for(let i=0; i<nums.length;i++){
+            total += nums[i];
+            count++;
+        }
+        let final = total/count;
+        console.log(final);
+        return final;
+    }
+    
+    average([20,10,30]);
+
+</script>
