@@ -26,31 +26,71 @@
 
     // sum([1,2,3,4,5])
 
-    let largest = (nums) =>{
+    // let largest = (nums) =>{
+    //     let temp = nums[0];
+    //     for(let i=0; i<nums.length;i++){
+    //         if(nums[i]>temp){
+    //             temp = nums[i];
+    //         }
+    //     }
+    //     console.log(temp);
+    //     return temp;
+    // }
+
+    // largest([1,12,123,3204,3,300]);
+
+    // let average = (nums) =>{
+    //     let total = 0;
+    //     let count = 0;
+    //     for(let i=0; i<nums.length;i++){
+    //         total += nums[i];
+    //         count++;
+    //     }
+    //     let final = total/count;
+    //     console.log(final);
+    //     return final;
+    // }
+    
+    // average([20,10,30]);
+
+    // let timedSpeeds = [150,300,220,150,175];
+
+    // let aveSpeed = average(timedSpeeds);
+
+    let average = (vals, dropLowest) => {
+        let total = 0;
+        let count = 0;
+        if(dropLowest === true){
+            vals = remLowest(vals);
+            console.log(vals);
+        }
+        for(let i=0; i<vals.length;i++){
+            total += vals[i];
+            count++;
+        }
+        return total/count;
+    }
+        
+    let remLowest = (nums) =>{
         let temp = nums[0];
-        for(let i=0; i<nums.length;i++){
-            if(nums[i]>temp){
+        let place = 0;
+        for(let i=0; i<nums.length; i++){
+            if(nums[i]<temp){
                 temp = nums[i];
+                place = i;
             }
         }
         console.log(temp);
-        return temp;
-    }
-
-    largest([1,12,123,3204,3,300]);
-
-    let average = (nums) =>{
-        let total = 0;
-        let count = 0;
-        for(let i=0; i<nums.length;i++){
-            total += nums[i];
-            count++;
+        for(let i=0; i<nums.length; i++){
+            if(nums[i]==temp){
+                nums.splice(i,1);
+            }
         }
-        let final = total/count;
-        console.log(final);
-        return final;
+        nums.splice(place,1);
+        console.log(nums);
+        return nums;
     }
     
-    average([20,10,30]);
+    remLowest([20,10,1,30,50,20,40,1]);
 
 </script>
