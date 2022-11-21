@@ -84,11 +84,11 @@
         for(let i=0; i<nums.length; i++){
             if(nums[i]==temp){
                 nums.splice(i,1);
+                console.log(nums);
+                return nums;
             }
         }
         nums.splice(place,1);
-        console.log(nums);
-        return nums;
     }
     
     remLowest([20,10,1,30,50,20,40,1]);
