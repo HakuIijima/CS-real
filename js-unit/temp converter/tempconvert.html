@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="row">
+        <div class="col-12 col-md-6 order-1 order-md-1">
+            <h2 class="align-middle bg-success text-center text-white">Temperature</h2>
+        </div> 
+        <div class="col-12 col-md-6 order-3 order-md-2">
+          <h2 class="align-middle bg-success text-center text-white">Result</h2>
+        </div> 
+
+        <div class="col-12 col-md-6 mb-2 order-2 order-md-3">
+            <div class="input-group">
+            <input type="number" class="form-control" id="temper">
+            <div class="input-group-append">
+              <div class="col-12 btn-group ">
+                <select class="form-control bg-info text-white"  id="firstTemp">
+                  <option class="dropdown-item bg-info" href="#" value="1">Celsius</option>
+                  <option class="dropdown-item bg-info" href="#" value="2">Fahrenheit</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div> 
+
+        <div class="col-12 col-md-6 order-4 order-md-4">
+          <div class="input-group">
+            <input id="ans" type="text" class="form-control" disabled>
+            <div class="input-group-append">
+              <div class="col-12 btn-group ">
+                <select class="form-control bg-info text-white"  id="secTemp" disabled>
+                  <option class="dropdown-item bg-info" href="#" value="1">Fahrenheit</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        
+    </div>
+
+
+    
+    <div id="list">
+    </div>
+  
+
+
+
+    <script>
+      let temp1 = [];
+      let temp2 = [];
+      let type = [];
+      let type2 = [];
+      let tempTypeQ = "";
+      let tempTypeA = "";
+      
+
+      let convert = (currVal, faren) =>{
+        if(faren){
+          console.log((currVal-32)/1.8);
+          return (currVal-32)/1.8;
+        }
+        else{
+          console.log((currVal*1.8)+32);
+          return (currVal*1.8)+32;
+        }
+      }
+
+      let isFaren = () =>{
+        let roundTo = document.getElementById("firstTemp").value; 
+        console.log(roundTo);
+        if(roundTo == 1){
+          type.push("Celsius");
+          type2.push("Farenheight");
+          return false;
+        }
+        else{
+          type.push("Farenheight");
+          type2.push("Celsius");
+          return true;
+        }
+      }
+
+      // let isFarenText = () =>{
+      //   let roundTo = document.getElementById("firstTemp").value; 
+      //   console.log(roundTo);
+      //   if(roundTo == 1){
+      //     return "Celsius";
+      //   }
+      //   else{
+      //     return "Farenheight";
+      //   }
+      // }
+
+
+      let calc = () =>{
+        let temp = Number(document.getElementById("temper").value);
+        console.log(temp);
+
+        let isFarenheight = isFaren();
+        console.log(isFarenheight);
+
+        let converted = convert(temp, isFarenheight);
+        console.log(converted);
+
+        document.getElementById("ans").value = converted.toFixed(2);
+
+        temp1.push(converted.toFixed(2));
+        temp2.push(temp.toFixed(2));
+
+        console.log(temp1);
+        console.log(temp2);
+
+        return converted.toFixed(2);
+      }
+
+      let changeLabel = () =>{
+        let temp = isFaren();
+        if(temp){
+          $("#secTemp").html("<option class='dropdown-item bg-info' href='#' value='1'>Celcius</option>");
+        }
+        else{
+          $("#secTemp").html("<option class='dropdown-item bg-info' href='#' value='1'>Farenheight</option>");
+        }
+      }
+
+      let printTemp = () =>{
+        let htm = "";
+
+        let temp = calc();
+
+        // let type = isFarenText();
+
+        // let type2 = "";
+
+
+        // if(type == "Celsius"){
+        //   type2 = "Farenheight";
+        // }
+        // else{
+        //   type2 = "Celsius";
+        // }
+
+        for(let i=0; i<temp1.length;i++){
+          htm += "<div class='row d-flex'> <div id='temp_"+i+"' class='text-center col-12 col-md-6 border mt-4 p-2'>"+ temp2[i] + " ° " + type[i] + " = " + temp1[i] + " ° " + type2[i] +"</div> </div>";
+        }
+        
+        $("#list").html(htm);
+      }
+
+      let qDivClicked = (e) =>{
+        console.log(e.target.id);
+        let id = e.target.id
+        let index = id.substring(id.indexOf("_")+1);
+
+        temp1.splice(index,1);
+        temp2.splice(index,1);
+        type.splice(index,1);
+        type2.splice(index,1);
+
+        htm = "";
+
+        for(let i=0; i<temp1.length;i++){
+          htm += "<div class='row d-flex'> <div id='temp_"+i+"' class='text-center col-12 col-md-6 border mt-4 p-2'>"+ temp2[i] + " ° " + type[i] + " = " + temp1[i] + " ° " + type2[i] +"</div> </div>";
+        }
+
+        $("#list").html(htm);
+
+        console.log(index);
+      }
+
+      document.getElementById("firstTemp").addEventListener("change", changeLabel);
+      // document.getElementById("temper").addEventListener("change", printTemp);
+      document.getElementById("list").addEventListener("click", qDivClicked);
+      document.getElementById("temper").addEventListener("keydown",function(e){
+        if(e.code === "Enter"){
+          if(e.repeat) return;
+          e.preventDefault;
+          printTemp();
+        }
+      })
+
+
+    </script>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

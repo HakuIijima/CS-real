@@ -25,9 +25,9 @@
           <button id="quizbtn" class="btn d-flex bg-primary justify-content-center my-3 text-white">Add New Quiz</button>
         </div>
         <div class="dropdown col-6 col-sm-12 d-flex justify-content-center mb-3">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Drop Lowest
-          </button>
+          </button> -->
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" id="true" href="#">true</a>
             <a class="dropdown-item" id="flase" href="#">false</a>
@@ -39,7 +39,7 @@
         <div class="col-12 col-sm-5 order-2 order-sm-1">
             <div class="bg-success text-center text-white"> <h3>Average</h3> </div>
         </div>
-        <div class="col-12 col-sm-5 order-1 order-sm-2">
+        <div id="quizScore" class="col-12 col-sm-5 order-1 order-sm-2">
             <div id="quizAns" class="text-wrap row" style="word-wrap:break-word">  </div>
         </div>
         <div class="col-12 col-sm-5 order-3 order-sm-3">
@@ -55,6 +55,8 @@
       let scores = [];
 
       let drpLowest = false;
+
+      let currId = 1;
 
       htm = "";
       
@@ -109,41 +111,55 @@
         return total/temp;
       }
 
-      let smallest = (nums) =>{
-        let temp = nums[0];
-        for(let i=0; i<nums.length;i++){
-            if(nums[i]<temp){
-                temp = nums[i];
-            }
-        }
-        console.log(temp);
-        return temp;
-      }
+      // let smallest = (nums) =>{
+      //   let temp = nums[0];
+      //   for(let i=0; i<nums.length;i++){
+      //       if(nums[i]<temp){
+      //           temp = nums[i];
+      //       }
+      //   }
+      //   console.log(temp);
+      //   return temp;
+      // }
 
       let calculate = () =>{
         let currScore = document.getElementById("quiz").value;
 
         if(currScore>0){
           storeScore(currScore);
+          htm = "";
 
-          htm += "<div style='font-size: 40px;' class='border col-6 d-flex justify-content-center fs-3'>"+currScore+"</div>"
+          for(let i=0; i<scores.length;i++){
+            htm += "<div style='font-size: 40px;' id='quiz_"+i+"' class='border col-12 col-sm-5 d-flex justify-content-center fs-3'>"+scores[i]+"</div>"
+          }
+          
+
+          console.log(htm);
 
           $("#quizAns").html(htm);
+          
+          currId++;
 
           if(drpLowest){
             let tempScore = remLowest(scores);
-            let currAve = calc(tempScore);
+            let currAve = calc(tempScore).toFixed(2);
             $("#quizAve").html("<h5>"+currAve+"</h5>");
           }
           else{
-            let currAve = calc(scores);
+            let currAve = calc(scores).toFixed(2);
             $("#quizAve").html("<h5>"+currAve+"</h5>");
           }
 
-          
-        }
-        
-        documen.getElementById("quiz").value = 0;
+          if(scores.length>0){
+            $("#clear").show();
+          }
+          else{
+            $("#clear").hide();
+          }
+
+        }     
+        document.getElementById("quiz").value = null;
+        document.getElementById("quiz").select();
       }
 
       let reset = () =>{
@@ -153,11 +169,37 @@
         htm ="";
       }
 
+      let qDivClicked = (e) =>{
+        console.log(e.target.id);
+        let id = e.target.id;
+        let index = id.substring(id.indexOf("_")+1);
+
+        scores.splice(index,1);
+
+        htm = "";
+
+        for(let i=0; i<scores.length;i++){
+          htm += "<div style='font-size: 40px;' id='quiz_"+i+"' class='border col-12 col-sm-5 d-flex justify-content-center fs-3'>"+scores[i]+"</div>"
+        }
+
+
+        console.log(htm);
+
+        $("#quizAns").html(htm);
+
+        let currAve = calc(scores).toFixed(2);
+        $("#quizAve").html("<h5>"+currAve+"</h5>");
+
+        
+
+        console.log(index);
+      }
 
 
       document.getElementById("clear").addEventListener("click", reset);
       document.getElementById("quizbtn").addEventListener("click", calculate);
-      document.getElementById("quizgrade").addEventListener("keydown",function(e){
+      document.getElementById("quizScore").addEventListener("click", qDivClicked);
+      document.getElementById("quizScore").addEventListener("keydown",function(e){
         if(e.code === "Enter"){
           e.preventDefault();
           calculate;
