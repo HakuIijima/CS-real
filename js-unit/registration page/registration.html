@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="row d-flex justify-content-center">
+        <h1 class="d-flex justify-content-center col-sm-8 col-12">Login to Access Mr M.'s Premium Content</h1>
+    </div>
+    <div class="form-row d-flex justify-content-center">
+        <div class="col-sm-8 col-12">
+            <label class="my-1 mr-2 border p-4 rounded" for="inlineFormCustomSelectPref">Upgrade your <u>life</u> by accessing these premium educational content including a calculator that will tell you how many years you have been alive!!</label>
+            <form action="">
+                <div class="row">
+                    <div class="col-8 border pt-3">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">username</div>
+                            </div>
+                        <input type="text" class="form-control" id="username" placeholder="Please enter username">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">age</div>
+                            </div>
+                        <input type="number" class="form-control" id="age" placeholder="Please enter age">
+                        </div>
+                    </div>
+                    <div class="col-4 pt-3 border">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" value="male" id="m">male
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" value="female" id="f">female
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" value="other" id="o">other
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 border pt-3">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">password</div>
+                            </div>
+                        <input type="password" class="form-control" id="pword" placeholder="Please enter password">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">email</div>
+                            </div>
+                        <input type="text" class="form-control" id="email" placeholder="Please enter email">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">confirm email</div>
+                            </div>
+                        <input type="text" class="form-control" id="email2" placeholder="Please confirm email">
+                        </div>
+                    </div>
+                    <div class="input-group mb-3 pt-1">
+                        <!-- <button id="registerbttn" class="btn bg-primary text-white">submit</button> -->
+                    </div>
+                </div>
+            </form>
+            <button id="registerbttn" class="btn bg-primary text-white">submit</button>
+            <button id="auto" class="btn">Auto Fill</button>
+            <div id="err" class="bg-danger p-2 text-white rounded" style="display:none">
+                <h6></h6>
+            </div>
+        </div>
+
+    </div>
+   
+    <script>
+        let htm = "";
+        let bHasError = false;
+
+        let checkfrm = () =>{
+            
+            htm = "";
+            // $('input:radio[name="gender"]').val();
+
+
+            initHtml();
+            checkUser();
+            checkAge();
+            checkPwd();
+            checkEmail();
+            checkGender();
+            console.log(htm);
+            $("#err").html(htm);
+
+            if(bHasError){
+                $("#err").fadeIn();
+            }
+            else{
+                $("#err").fadeOut();
+            }
+
+            bHasError = false;
+
+        }
+
+        let initHtml = () =>{
+            htm += "Please Fix: </n>";
+            console.log(1);
+        }
+
+        let checkUser = () =>{
+            let temp = document.getElementById("username").value;
+            if(temp.length < 5){
+                bHasError = true;
+                htm += "<li>Username must be over 5 characters</li>"
+                return;
+            }
+        }
+        let checkAge = () =>{
+            let temp = document.getElementById("age").value;
+            if(temp < 18){
+                bHasError = true;
+                htm += "<li>Must be over 18</li>"
+            }
+        }
+        let checkPwd = () =>{
+            let temp = document.getElementById("pword").value;
+            if(temp.length<5){
+                bHasError = true;
+                htm += "<li>Password must be over 5 characters</li>"
+                return;
+            }
+            if(temp.indexOf("$") != -1){
+                bHasError = true;
+                htm += "<li>Password can not include $ sign</li>"
+            }
+            if(temp.indexOf("*") != -1){
+                bHasError = true;
+                console.log(2);
+                htm += "<li>Password can not include * sign</li>"
+            }
+        }
+        let checkEmail = () =>{
+            let em1 = document.getElementById("email").value;
+            let em2 = document.getElementById("email2").value;
+            if(em1.length < 5){
+                bHasError = true;
+                htm += "<li>Email must be over 5 characters</li>"
+                return;
+            }
+            if(em1.indexOf("@") == -1 ){
+                bHasError = true;
+                htm += "<li>Email invalid : requires @</li>"
+            }
+            if(em1.indexOf(".") == -1 ){
+                bHasError = true;
+                htm += "<li>Email invalid : requires .</li>"
+            }
+            else if(em1.lastIndexOf("@") > em1.lastIndexOf(".")){
+                bHasError = true;
+                htm += "<li>Email invalid</li>"
+            }
+            if(em1 != em2){
+                bHasError = true;
+                htm += "<li>Emails do not match</li>"
+            }
+        }
+        let checkGender = () =>{
+            let gender = $('input:radio[name="gender"]').val();
+            console.log(gender);
+        }
+
+        let autoFill = () =>{
+            document.getElementById("username").value = 123456;
+            document.getElementById("age").value = 18;
+            document.getElementById("pword").value = 1234567;
+            document.getElementById("email").value = "haku.iijima@gmail.com";
+            document.getElementById("email2").value = "haku.iijima@gmail.com";
+        }
+
+
+
+        
+
+        document.getElementById("registerbttn").addEventListener("click",checkfrm);
+        document.getElementById("auto").addEventListener("click",autoFill);
+        document.getElementById("registerbttn").addEventListener("click",function(e){
+        if(e.code === "Enter"){
+          e.preventDefault;
+          checkfrm();
+        }
+      })
+
+
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
