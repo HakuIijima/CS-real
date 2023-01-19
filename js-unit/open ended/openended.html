@@ -175,14 +175,15 @@
 
         let checkName = () =>{
             let temp = document.getElementById("name").value;
-            if(temp === ""){
+            if(temp == ""){
+                bHasError = true;
                 htm += "<li>please enter name</li>"
             }
         }
 
         let checkGrade = () =>{
             let temp = document.getElementById("grade").value;
-            if(9 < temp && temp < 12){
+            if(9 > temp || temp > 12){
                 bHasError = true;
                 htm += "<li>grade must be between 9 and 12</li>"
                 return;
@@ -198,6 +199,7 @@
         let checkDOB = () =>{
             let temp = document.getElementById("birth").value;
             if(temp == ""){
+                bHasError = true;
                 htm += "<li>please enter DOB</li>"
             }
         }
@@ -205,6 +207,7 @@
         let checkAdress = () =>{
             let temp = document.getElementById("adress").value;
             if(temp == ""){
+                bHasError = true;
                 htm += "<li>please enter adress</li>"
             }
         }
@@ -237,6 +240,7 @@
         let checkGender = () =>{
             let temp = $("input[type=radio][name=gender]:checked").val();
             if(temp == undefined){
+                bHasError = true;
                 htm += "<li>Please select gender</li>"
             }
         }
@@ -244,6 +248,7 @@
         let checkPhone = () =>{
             let temp = document.getElementById("phone").value;
             if(temp.length != 10){
+                bHasError = true;
                 htm += "<li>Please enter valid phone number</li>"
             }
         }
