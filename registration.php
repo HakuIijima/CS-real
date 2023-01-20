@@ -21,6 +21,12 @@
 
     var_dump($_POST);
 
+    echo $_POST['gender'];
+
+    if($_POST['gender'] == ""){
+        echo "testgood";
+    }
+
     ?>
 
     <?php
@@ -131,6 +137,10 @@
         }
         if($_POST['antibotanswer'] != $_POST['antibotans']){
             $feedback .= "<li> recaptcha is not correct </li>";
+            $done = false;
+        }
+        if($_POST['gender'] == ""){
+            $feedback .= "<li> Please select gender </li>";
             $done = false;
         }
         if($done === true){
