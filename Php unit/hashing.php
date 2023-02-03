@@ -7,14 +7,19 @@
         <?php
 
         var_dump($_POST);
-        $n = 5;
+        $n = mt_rand(1,10);
+
+        echo $n;
 
         $nHash = hash('sha256', $n);
         $nHash1 = hash('sha256', $_POST['num1']);
 
         if (isset($_POST['num1']) === true){
             if (hash('sha256', $_POST['num1']) == $nHash){
-            echo "true";
+            echo "Congrats";
+            }
+            else{
+                echo "fail";
             }
         }
         
